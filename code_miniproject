@@ -1,0 +1,52 @@
+import tkinter as tk
+import queue
+
+# Create a queue
+q = queue.Queue()
+
+# Function to add an element to the queue
+def enqueue():
+    item = entry.get()
+    q.put(item)
+    update_display()
+
+# Function to remove an element from the queue
+def dequeue():
+    if not q.empty():
+        q.get()
+        update_display()
+
+# Function to update the display
+def update_display():
+    # Clear the canvas
+    canvas.delete("all")
+
+    # Draw the queue elements
+    elements = list(q.queue)
+    for i, element in enumerate(elements):
+        canvas.create_rectangle(50, i * 40 + 50, 150, (i + 1) * 40 + 50, fill="lightblue")
+        canvas.create_text(100, (i * 40 + (i + 1) * 40) / 2 + 50, text=element)
+
+# Create a GUI window
+window = tk.Tk()
+window.title("Queue Visualization")
+
+# Create a canvas to display the queue
+canvas = tk.Canvas(window, width=200, height=300)
+canvas.pack()
+
+# Entry field for adding elements to the queue
+entry = tk.Entry(window)
+entry.pack()
+
+# Buttons for enqueuing and dequeuing elements
+enqueue_button = tk.Button(window, text="Enqueue", command=enqueue)
+enqueue_button.pack()
+dequeue_button = tk.Button(window, text="Dequeue", command=dequeue)
+dequeue_button.pack()
+
+# Initialize the display
+update_display()
+
+# Start the GUI main loop
+window.mainloop()
